@@ -16,15 +16,12 @@
         var revoked
         var pass
         var id
-        checker();
-        async function checker() {
+        function check() {
             pass = document.getElementById("pass").value;
             id = document.getElementById("cert").value;
             const response = await fetch('https://sign.starfiles.co/sign_status?p12=' + id + '&password=' + pass);
             const data = await response.json();
             revoked = (data.isRevoked)
-        }
-        function check() {
             alert(revoked)
         }
     </script>
