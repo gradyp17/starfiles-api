@@ -22,7 +22,7 @@
             const response = await fetch('https://sign.starfiles.co/sign_status?p12=' + id + '&password=' + pass);
             const data = await response.json();
             revoked = (data.isRevoked)
-            alert(revoked)
+            alert("is the cert revoked\n" + revoked)
         }
     </script>
 </body>
