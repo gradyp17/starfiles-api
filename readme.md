@@ -5,6 +5,7 @@
 	<p align="center" style="font-size: 18px;">A simple revoke checker using the starfiles api!</p>
 	<p align="center">
 	<a href="https://techdech.github.io/revokechecker/">take me there!</a>
+	<br>
         <a href="https://techdech.github.io/">see my other projects</a>
 	</p>
 	<hr>
