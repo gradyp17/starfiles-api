@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="stylesheet" href="main.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Revoke Checker</title>
 </head>
 <body>
 <!--
@@ -16,26 +16,33 @@
 /___/              /___/                              
 --> 
 <center>
-    <h1>revoke checker via starfiles api!</h1>
-    <a href="https://techdech.github.io"><h2>by grady2smart</h2></a>
-    <input type="text" id="cert" placeholder="Starfiles cert ID" required>
-    <input type="text" id="pass" placeholder="password" required>
-    <button onclick="check()">check</button>
+    <h1>Revoke checker via starfiles api!</h1>
+    <a href="https://techdech.github.io"><h2>By grady2smart</h2></a>
+    <input type="text" id="cert" placeholder="Starfiles Certificate ID" required>
+    <input type="text" id="pass" placeholder="Password" required>
+    <button id="check_revoke_button">Check</button>
     <br>
     <br>
     <br>
-    <a href="https://github.com/techdech/revokechecker">See the code</a>
+    <a href="https://github.com/techdech/revokechecker">View the Code</a>
     <script>
-        var revoked
-        var pass
-        var id
-        async function check() {
-            pass = document.getElementById("pass").value;
-            id = document.getElementById("cert").value;
-            const response = await fetch('https://sign.starfiles.co/sign_status?p12=' + id + '&password=' + pass);
-            const data = await response.json();
-            revoked = (data.isRevoked)
-            alert("is the cert revoked\n" + revoked)
+        document.getElementById('check_revoke_button').addEventListener('click', async function(){
+            alert(await check_status());
+        });
+        async function check_status(){
+            const response = await fetch('https://sign.starfiles.co/sign_status?p12=' + document.getElementById("cert").value + '&password=' + document.getElementById("pass").value);
+            let data = await response.text();
+            try {
+                data = JSON.parse(data);
+            } catch (e) {
+                return 'Unexpected format: ' + data;
+            }
+            if(data.error)
+                return 'Error: ' + data.error;
+            if(data.isRevoked)
+                return 'Certificate is revoked';
+            else
+                return 'Certificate is signed';
         }
     </script>
     </center>
